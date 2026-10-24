@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mental Health Signal — AI-powered student wellness insights</title>
+<meta name="description" content="Predict a student mental-health score from daily habits using a Random Forest model trained on 5,000 student records.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="nav" id="top">
+  <div class="wrap nav-in">
+    <a href="#top" class="logo"><span class="logo-mark"></span>Mental Health Signal</a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
+    <nav class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#predict">Predictor</a>
+      <a href="#insights">Insights</a>
+      <a href="#model">The model</a>
+      <a href="#faq">FAQ</a>
+      <a href="#predict" class="btn btn-sm">Get your score</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-in">
+    <div class="hero-copy">
+      <span class="pill">Machine-learning powered · 5,000 student records</span>
+      <h1>Understand how your habits shape your <em>mental wellbeing</em>.</h1>
+      <p class="lead">Enter your sleep, screen time, activity and stress. Our trained Random Forest model returns a 0–10 wellbeing score in seconds, with tailored suggestions.</p>
+      <div class="hero-cta">
+        <a href="#predict" class="btn">Check my score</a>
+        <a href="#insights" class="btn btn-ghost">Explore the data</a>
+      </div>
+      <ul class="trust">
+        <li><b id="m-n">5,000</b><span>students analysed</span></li>
+        <li><b>0.87</b><span>model R² (test)</span></li>
+        <li><b>±0.37</b><span>avg. error (MAE)</span></li>
+      </ul>
+    </div>
+    <div class="hero-card" aria-hidden="true">
+      <svg viewBox="0 0 240 150" class="gauge-demo">
+        <defs><linearGradient id="hg" x1="0" x2="1"><stop offset="0" stop-color="#E0705F"/><stop offset=".5" stop-color="#E3B341"/><stop offset="1" stop-color="#3D9B74"/></linearGradient></defs>
+        <path d="M30 130 A90 90 0 0 1 210 130" fill="none" stroke="#E6E2DB" stroke-width="16" stroke-linecap="round"/>
+        <path d="M30 130 A90 90 0 0 1 210 130" fill="none" stroke="url(#hg)" stroke-width="16" stroke-linecap="round" pathLength="100" stroke-dasharray="100" stroke-dashoffset="30"/>
+      </svg>
+      <div class="demo-score">7.0<small>/10</small></div>
+      <div class="demo-label">Steady signal</div>
+      <div class="demo-rows">
+        <div><span>Sleep</span><i style="--w:82%"></i></div>
+        <div><span>Activity</span><i style="--w:60%"></i></div>
+        <div><span>Screen time</span><i style="--w:45%"></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="how">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">How it works</span><h2>From daily habits to a clear signal</h2></div>
+    <div class="steps">
+      <article class="card"><span class="num">1</span><h3>Share your routine</h3><p>Answer 12 quick questions about your profile, social-media use, sleep, study, activity and stress.</p></article>
+      <article class="card"><span class="num">2</span><h3>Model analysis</h3><p>A tuned Random Forest, trained on real survey data, evaluates how these factors interact.</p></article>
+      <article class="card"><span class="num">3</span><h3>Get your score</h3><p>Receive a 0–10 score, how you compare with the average student, and practical next steps.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="predict">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Predictor</span><h2>Your wellbeing score</h2><p>Takes about a minute. Your answers are sent only to this app's server to compute the prediction and are not stored.</p></div>
+    <div class="predict-grid">
+      <form id="form" class="card form" novalidate>
+        <fieldset>
+          <legend><span>01</span>Profile</legend>
+          <div class="g3">
+            <div class="field"><label for="age">Age</label><input id="age" name="age" type="number" min="10" max="100" placeholder="21"><em class="err" data-for="age"></em></div>
+            <div class="field"><label for="gender">Gender</label>
+              <select id="gender" name="gender"><option value="" hidden selected>Select</option><option>Male</option><option>Female</option></select><em class="err" data-for="gender"></em></div>
+            <div class="field"><label for="country">Country</label><input id="country" name="country" list="countries" placeholder="India" autocomplete="off">
+              <datalist id="countries"><option>India</option><option>USA</option><option>Canada</option><option>Australia</option><option>UK</option><option>Germany</option><option>Mexico</option><option>Turkey</option><option>France</option></datalist><em class="err" data-for="country"></em></div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend><span>02</span>Academics &amp; social media</legend>
+          <div class="g2">
+            <div class="field"><label for="academic_level">Academic level</label>
+              <select id="academic_level" name="academic_level"><option value="" hidden selected>Select</option><option>High School</option><option>Undergraduate</option><option>Graduate</option></select><em class="err" data-for="academic_level"></em></div>
+            <div class="field"><label for="most_used_platform">Most-used platform</label>
+              <select id="most_used_platform" name="most_used_platform"><option value="" hidden selected>Select</option>
+                <option>Instagram</option><option>TikTok</option><option>YouTube</option><option>WhatsApp</option><option>Facebook</option><option>Snapchat</option><option value="Twitter">X (Twitter)</option><option>LinkedIn</option><option>WeChat</option><option>LINE</option><option>KakaoTalk</option><option>VKontakte</option></select><em class="err" data-for="most_used_platform"></em></div>
+            <div class="field"><label for="purpose_of_use">Main purpose of use</label>
+              <select id="purpose_of_use" name="purpose_of_use"><option value="" hidden selected>Select</option><option>Entertainment</option><option>Education</option><option>Networking</option><option>News</option></select><em class="err" data-for="purpose_of_use"></em></div>
+            <div class="field"><label for="avg_daily_usage_hours">Daily social-media time</label>
+              <div class="unit"><input id="avg_daily_usage_hours" name="avg_daily_usage_hours" type="number" min="0" max="24" step="0.1" placeholder="4.0"><span>hrs</span></div><em class="err" data-for="avg_daily_usage_hours"></em></div>
+            <div class="field span2"><label for="daily_unlocks">Phone unlocks per day</label>
+              <input id="daily_unlocks" name="daily_unlocks" type="number" min="0" max="1000" placeholder="100"><small>See Screen Time (iOS) or Digital Wellbeing (Android).</small><em class="err" data-for="daily_unlocks"></em></div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend><span>03</span>Lifestyle &amp; stress</legend>
+          <div class="g3">
+            <div class="field"><label for="study_hours">Study / day</label><div class="unit"><input id="study_hours" name="study_hours" type="number" min="0" max="24" step="0.1" placeholder="4"><span>hrs</span></div><em class="err" data-for="study_hours"></em></div>
+            <div class="field"><label for="physical_activity_hours">Activity / day</label><div class="unit"><input id="physical_activity_hours" name="physical_activity_hours" type="number" min="0" max="24" step="0.1" placeholder="1"><span>hrs</span></div><em class="err" data-for="physical_activity_hours"></em></div>
+            <div class="field"><label for="sleep_hours_per_night">Sleep / night</label><div class="unit"><input id="sleep_hours_per_night" name="sleep_hours_per_night" type="number" min="0" max="24" step="0.1" placeholder="7"><span>hrs</span></div><em class="err" data-for="sleep_hours_per_night"></em></div>
+          </div>
+          <div class="field" style="margin-top:14px"><label id="stress-label">Perceived stress level</label>
+            <div class="seg" role="group" aria-labelledby="stress-label" id="stress-seg">
+              <button type="button" data-v="Low">Low</button><button type="button" data-v="Medium">Medium</button><button type="button" data-v="High">High</button><button type="button" data-v="Very High">Very high</button>
+            </div><input type="hidden" id="stress_level" name="stress_level"><em class="err" data-for="stress_level"></em></div>
+        </fieldset>
+
+        <div class="form-foot">
+          <button class="btn" id="submit" type="submit"><span>Predict my score</span></button>
+          <button class="btn btn-ghost" id="sample" type="button">Fill sample data</button>
+        </div>
+      </form>
+
+      <aside class="card result" aria-live="polite">
+        <div id="s-idle" class="state">
+          <svg viewBox="0 0 240 150" class="gauge"><path d="M30 130 A90 90 0 0 1 210 130" fill="none" stroke="#E6E2DB" stroke-width="16" stroke-linecap="round"/></svg>
+          <h3>Your score appears here</h3><p>Complete the form to see your predicted wellbeing score, how it compares, and tailored tips.</p>
+        </div>
+        <div id="s-load" class="state" hidden><div class="spinner"></div><h3>Analysing…</h3><p>Running your inputs through the model.</p></div>
+        <div id="s-res" class="state" hidden>
+          <div class="gauge-wrap">
+            <svg viewBox="0 0 240 150" class="gauge">
+              <defs><linearGradient id="rg" x1="0" x2="1"><stop offset="0" stop-color="#E0705F"/><stop offset=".5" stop-color="#E3B341"/><stop offset="1" stop-color="#3D9B74"/></linearGradient></defs>
+              <path d="M30 130 A90 90 0 0 1 210 130" fill="none" stroke="#E6E2DB" stroke-width="16" stroke-linecap="round"/>
+              <path id="g-fill" d="M30 130 A90 90 0 0 1 210 130" fill="none" stroke="url(#rg)" stroke-width="16" stroke-linecap="round" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100"/>
+            </svg>
+            <div class="score"><b id="r-score">0.0</b><small>/10</small></div>
+          </div>
+          <div id="r-band" class="band">—</div>
+          <p id="r-text" class="r-text"></p>
+          <div class="compare"><div class="bar"><i id="r-you"></i><i id="r-avg" class="avg"></i></div>
+            <div class="legend"><span><i class="d you"></i>You</span><span><i class="d avg"></i>Student average <b id="r-avgv"></b></span></div></div>
+          <h4>Personalised suggestions</h4>
+          <ul id="r-tips" class="tips"></ul>
+          <button class="btn btn-ghost btn-sm" id="again" type="button">Run another prediction</button>
+        </div>
+        <div id="s-err" class="state" hidden><div class="err-ic">!</div><h3>Couldn't get a prediction</h3><p id="e-text"></p><button class="btn btn-ghost btn-sm" id="retry" type="button">Try again</button></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="insights">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Dataset insights</span><h2>What 5,000 students tell us</h2><p>Average mental-health score (0–10) by habit. Charts are generated live from the training dataset.</p></div>
+    <div class="charts">
+      <article class="card"><h3>Stress level</h3><div class="chart" id="c-stress"></div></article>
+      <article class="card"><h3>Sleep per night (hrs)</h3><div class="chart" id="c-sleep"></div></article>
+      <article class="card"><h3>Daily social-media use (hrs)</h3><div class="chart" id="c-usage"></div></article>
+      <article class="card"><h3>Most-used platform</h3><div class="chart hbars" id="c-plat"></div></article>
+    </div>
+    <div class="card corr"><h3>Correlation with mental-health score</h3><div id="c-corr"></div><p class="note">Correlation shows association, not causation.</p></div>
+  </div>
+</section>
+
+<section class="section alt" id="model">
+  <div class="wrap two">
+    <div>
+      <span class="eyebrow">The model</span><h2>A tuned Random Forest regressor</h2>
+      <p>Trained on 5,000 student survey records with a scikit-learn pipeline: categorical encoding, scaling, feature engineering (country grouping) and a hyper-parameter-tuned Random Forest.</p>
+      <ul class="check"><li>12 input features across profile, digital habits and lifestyle</li><li>Outperforms a linear-regression baseline by +0.13 R²</li><li>Served through a FastAPI endpoint with validated inputs</li></ul>
+    </div>
+    <div class="card">
+      <table class="tbl"><thead><tr><th>Model</th><th>R²</th><th>MAE</th></tr></thead><tbody>
+        <tr><td>Linear regression</td><td>0.740</td><td>0.536</td></tr>
+        <tr><td>Random Forest (default)</td><td>0.878</td><td>0.347</td></tr>
+        <tr class="hl"><td>Random Forest (tuned) · deployed</td><td>0.865</td><td>0.369</td></tr></tbody></table>
+      <p class="note">Test-set metrics from the project notebook. The training data covers ages 18–24; predictions outside this range are less reliable.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="wrap narrow">
+    <div class="sec-head"><span class="eyebrow">FAQ</span><h2>Good to know</h2></div>
+    <details class="card"><summary>Is this a medical diagnosis?</summary><p>No. It's a statistical estimate based on survey patterns and cannot assess any individual's health. It is not a substitute for professional advice.</p></details>
+    <details class="card"><summary>Is my data stored?</summary><p>No. Inputs are sent to the server only to compute the prediction and are not saved or logged by this app.</p></details>
+    <details class="card"><summary>How accurate is it?</summary><p>On held-out test data the model explains about 86% of the variance with an average error of roughly 0.37 points on the 10-point scale.</p></details>
+    <details class="card"><summary>I'm struggling — what should I do?</summary><p>Please talk to someone you trust or a qualified professional. If you're in crisis or in danger, contact your local emergency number. In India, Tele-MANAS offers free 24/7 support at 14416 (or 1-800-891-4416).</p></details>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="logo"><span class="logo-mark"></span>Mental Health Signal</div>
+    <p>For informational and educational purposes only — not a clinical assessment or diagnosis.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
